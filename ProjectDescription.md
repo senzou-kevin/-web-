@@ -47,7 +47,9 @@
 
 ## 系统架构图
 
-![系统架构图](/Users/zousen/Documents/APL/travelProject/系统架构图.jpg)
+![系统架构图.jpg](https://i.loli.net/2021/09/02/RUq5z7ICd9lEvf4.png)
+
+
 
 **客户端:**采用浏览器，并使用外部的Bootstrap和JQuery
 
@@ -71,7 +73,7 @@ Jar 包管理工具: **maven**
 
 ## E-R 图
 
-![E-R图1](/Users/zousen/Documents/APL/travelProject/E-R图1.jpg)
+![E-R图1.jpg](https://i.loli.net/2021/09/02/gZhuIJDA48e1Bbp.png)
 
 用户和线路的关系是多对多的关系。一个用户可以有多个线路。一个线路可以被多个用户拥有。
 
@@ -81,7 +83,9 @@ Jar 包管理工具: **maven**
 
 线路和商品图片是一对多关系，一个线路可以有多个商品图片。
 
-![E-R图2](/Users/zousen/Documents/APL/travelProject/E-R图2.jpg)
+![E-R图2.jpg](https://i.loli.net/2021/09/02/JYknfA4V2zKibRX.png)
+
+
 
 由于用户和线路是多对多关系，因此可以拆分为一对多和多对一关系。一个用户可以有多个收藏，多个收藏可以属于一个线路。
 
@@ -155,39 +159,53 @@ Jar 包管理工具: **maven**
 
 **首页**
 
-![首页](/Users/zousen/Documents/APL/travelProject/首页.png)
+![首页.png](https://i.loli.net/2021/09/02/fpFvGlt2q8D16go.png)
+
+
 
 
 
 **登录**
 
-![登录](/Users/zousen/Documents/APL/travelProject/登录.png)
+![登录.png](https://i.loli.net/2021/09/02/twQIDzZKPmJceNd.png)
+
+
 
 
 
 **注册**
 
-![注册](/Users/zousen/Documents/APL/travelProject/注册.png)
+![注册.png](https://i.loli.net/2021/09/02/zQEJWslmZThkUxN.png)
+
+
 
 
 
 **线路分页展示**
 
-![线路分页展示](/Users/zousen/Documents/APL/travelProject/线路分页展示.png)
+![线路分页展示.png](https://i.loli.net/2021/09/02/crekMIKvpSgDnyz.png)
+
+
 
 **线路详情**
 
-![线路详情](/Users/zousen/Documents/APL/travelProject/线路详情.png)
+![线路详情.png](https://i.loli.net/2021/09/02/NnVBDl8EWMYdX2c.png)
+
+
 
 
 
 **收藏排行榜**
 
-![收藏排行榜](/Users/zousen/Documents/APL/travelProject/收藏排行榜.png)
+![收藏排行榜.png](https://i.loli.net/2021/09/02/wcd3mtaKTjuReVv.png)
+
+
 
 
 
 **我的收藏**
 
-![我的收藏](/Users/zousen/Documents/APL/travelProject/我的收藏.png)
+![我的收藏.png](https://i.loli.net/2021/09/02/QiZ9517lxO4gdIj.png)
+
+
 
