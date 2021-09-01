@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>收藏排行榜</title>
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/ranking-list.css">
+        <script src="js/jquery-3.3.1.js"></script>
+        <script>
+            $(function(){
+                loadRank(null,null,null,null);
+            })
+            function loadRank(currentPage,rname,price_1,price_2){
+                //发送ajax请求
+                $.get("favorite/rank",{currentPage:currentPage,rname:rname,price_1:price_1,price_2:price_2},function(pb){
+                    //展示数据
+                    var route_lis="";
+                    var start=pb.start;
+                    for(var i=0;i<pb.list.length;i++){
+                        var route=pb.list[i];
+                        var route_li;
+                        if(i===0){
+                            route_li='<li>\n' +
+                                '  <span class="num one">'+(start+1)+'</span>\n' +
+                                '  <a href="route_detail.html?rid='+route.rid+'"><img src="'+route.rimage+'" ></a>\n' +
+                                '  <h4><a href="route_detail.html?rid='+route.rid+'">'+route.rname+'</a></h4>\n' +
+                                '  <p>\n' +
+                                '      <b class="price">&yen;<span>'+route.price+'</span>起</b>\n' +
+                                '      <span class="shouchang">已收藏'+route.count+'次</span>\n' +
+                                '  </p>\n' +
+                                '</li>';
+                        }else if(i===1){
+                            route_li='<li>\n' +
+                                '  <span class="num two">'+(start+1)+'</span>\n' +
+                                '  <a href="route_detail.html?rid='+route.rid+'"><img src="'+route.rimage+'" ></a>\n' +
+                                '  <h4><a href="route_detail.html">'+route.rname+'</a></h4>\n' +
+                                '  <p>\n' +
+                                '      <b class="price">&yen;<span>'+route.price+'</span>起</b>\n' +
+                                '      <span class="shouchang">已收藏'+route.count+'次</span>\n' +
+                                '  </p>\n' +
+                                '</li>';
+                        }else {
+                            route_li='<li>\n' +
+                                '  <span class="num">'+(start+1)+'</span>\n' +
+                                '  <a href="route_detail.html?rid='+route.rid+'"><img src="'+route.rimage+'" ></a>\n' +
+                                '  <h4><a href="route_detail.html">'+route.rname+'</a></h4>\n' +
+                                '  <p>\n' +
+                                '      <b class="price">&yen;<span>'+route.price+'</span>起</b>\n' +
+                                '      <span class="shouchang">已收藏'+route.count+'次</span>\n' +
+                                '  </p>\n' +
+                                '</li>';
+                        }
+                        start+=1;
+                        route_lis+=route_li;
+                    }
+                    $("#rank").html(route_lis);
+
+                    //分页展示数据
+                    var lis="";
+                    //首页
+                    var firstPage='<li onclick="loadRank(1,'+rname+','+price_1+','+price_2+')"><a href="javascript:void(0)">首页</a></li>';
+                    //上一页
+                    var beforeNum=pb.currentPage-1;
+                    if(beforeNum<=0){
+                        beforeNum=1;
+                    }
+                    var prePage='<li onclick="loadRank('+beforeNum+','+rname+','+price_1+','+price_2+')" class="threeword"><a href="javascript:void(0)">上一页</a></li>';
+                    lis+=firstPage;
+                    lis+=prePage;
+
+                    //定义一个开始位置begin 定义一个end
+                    var begin;
+                    var end;
+                    if(pb.totalPage<10){
+                        //总页数<10
+                        begin=1;
+                        end=pb.totalPage;
+                    }else {
+                        //总页数>=10
+                        begin=pb.currentPage-5;
+                        end=pb.currentPage+4;
+
+                        //补齐操作
+                        if(begin<1){
+                            begin=1;
+                            end=begin+9;
+                        }
+                        if(end>pb.totalPage){
+                            end=pb.totalPage;
+                            begin=end-9;
+                        }
+                    }
+                    for(var i=begin;i<=end;i++){
+                        var li;
+                        if(pb.currentPage===i){
+                            li='<li class="curPage" onclick="loadRank('+i+','+rname+','+price_1+','+price_2+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                        }else {
+                            li='<li onclick="loadRank('+i+','+rname+','+price_1+','+price_2+')"><a href="javascript:void(0)">'+i+'</a></li>';
+                        }
+                        lis+=li;
+                    }
+                    //下一页
+                    var afterNum=pb.currentPage+1;
+                    if(afterNum>=pb.totalPage){
+                        afterNum=pb.totalPage;
+                    }
+                    var nextPage='<li onclick="loadRank('+afterNum+','+rname+','+price_1+','+price_2+')" class="threeword"><a href="javascript:void(0)">下一页</a></li>';
+                    var lastPage='<li onclick="loadRank('+pb.totalPage+','+rname+','+price_1+','+price_2+')" class="threeword"><a href="javascript:void(0)">末页</a></li>';
+                    lis+=nextPage;
+                    lis+=lastPage;
+                    $("#rank_page").html(lis);
+                });
+            }
+
+            function rank_search(){
+                var rname=$("#rank_rname").val();
+                var price_1=$("#price_1").val();
+                var price_2=$("#price_2").val();
+                loadRank(null,rname,price_1,price_2)
+            }
+        </script>
+    </head>
+    <body>
+    <!--引入头部-->
+    <div id="header"></div>
+        <div class="contant">
+            <div class="shaixuan">
+                <span>线路名称</span>
+                <input type="text" id="rank_rname">
+                <span>金额</span>
+                <input id="price_1" type="text">~<input id="price_2" type="text">
+                <button onclick="rank_search()" id="rank_search">搜索</button>
+            </div>
+            <div class="list clearfix">
+                <ul id="rank">
+                    <!--动态添加数据 -->
+                </ul>
+            </div>
+            <div class="pageNum">
+                <ul id="rank_page">
+                    <!--动态地添加数据 -->
+                </ul>
+            </div>
+        </div>
+    	
+         <!--导入底部-->
+   		 <div id="footer"></div>
+    <!--导入布局js，共享header和footer-->
+    <script type="text/javascript" src="js/include.js"></script>
+    </body>
+</html>
